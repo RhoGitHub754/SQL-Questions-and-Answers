@@ -1,0 +1,14 @@
+select state, 
+biz_num
+
+from
+
+(select state, 
+count(business_id) as biz_num, 
+rank() over(order by count(business_id) desc)
+from yelp_business
+where stars = 5
+group by state
+order by 3) tp
+
+where rank < 6
